@@ -1,5 +1,6 @@
 const counter = document.getElementById('counter');
 const statusDot = document.querySelector('.status-dot');
+const statusText = document.getElementById('status-text');
 
 // If served from backend (same origin), use relative path. 
 // If opened directly as file (file:// or localhost frontend dev server), point to backend URL.
