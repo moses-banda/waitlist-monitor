@@ -30,6 +30,11 @@ async function fetchStats() {
     } catch (error) {
         console.error('Error fetching stats:', error);
         statusDot.style.backgroundColor = '#ef4444'; // Red for error
+        // Verify if it's a content decoding error or network error
+        if (counter.innerText === '--' || counter.innerText === '') {
+            counter.innerText = 'ERR';
+            counter.style.fontSize = '8rem'; // Shrink slightly for text
+        }
     }
 }
 
