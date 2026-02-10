@@ -1,10 +1,11 @@
 const counter = document.getElementById('counter');
 const statusDot = document.querySelector('.status-dot');
 
-// Automatically switch between localhost and production backend
-const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+// If served from backend (same origin), use relative path. 
+// If opened directly as file (file:// or localhost frontend dev server), point to backend URL.
+const API_URL = (window.location.protocol === 'file:' || window.location.port === '5500')
     ? 'http://localhost:8000'
-    : 'https://waitlist-monitor.onrender.com'; // We will update this after deploying backend
+    : '';
 
 async function fetchStats() {
     try {
