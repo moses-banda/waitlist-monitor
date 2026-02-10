@@ -1,9 +1,14 @@
 const counter = document.getElementById('counter');
 const statusDot = document.querySelector('.status-dot');
 
+// Automatically switch between localhost and production backend
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8000'
+    : 'https://waitlist-monitor.onrender.com'; // We will update this after deploying backend
+
 async function fetchStats() {
     try {
-        const response = await fetch('http://localhost:8000/status');
+        const response = await fetch(`${API_URL}/status`);
         if (!response.ok) throw new Error('Network response was not ok');
 
         const data = await response.json();
