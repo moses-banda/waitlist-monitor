@@ -9,8 +9,15 @@ const API_URL = (window.location.protocol === 'file:' || window.location.port ==
 
 async function fetchStats() {
     try {
-        const response = await fetch(`${API_URL}/status`);
-        if (!response.ok) throw new Error('Network response was not ok');
+        statusText.innerText = 'Connecting...';
+        // Add cache busting to prevent stale responses
+        const response = await fetch(`${API_URL}/status?t=${Date.now()}`);
+
+        if (!response.ok) {
+            // Try to get error details from backend
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.detail || 'Server Error');
+        }
 
         const data = await response.json();
 
@@ -35,7 +42,9 @@ async function fetchStats() {
     } catch (error) {
         console.error('Error fetching stats:', error);
         statusDot.style.backgroundColor = '#ef4444'; // Red for error
-        statusText.innerText = 'Connection Lost';
+
+        // Show the actual error message on screen
+        statusText.innerText = error.message.substring(0, 30); // Truncate if too long
         statusText.style.color = '#ef4444';
 
         // Verify if it's a content decoding error or network error
