@@ -27,9 +27,17 @@ async function fetchStats() {
         counter.innerText = newVal;
         statusDot.style.backgroundColor = '#22c55e'; // Green for connected
 
+        // Update status text with timestamp
+        const now = new Date().toLocaleTimeString();
+        statusText.innerText = `Live • Last updated: ${now}`;
+        statusText.style.color = '#22c55e';
+
     } catch (error) {
         console.error('Error fetching stats:', error);
         statusDot.style.backgroundColor = '#ef4444'; // Red for error
+        statusText.innerText = 'Connection Lost';
+        statusText.style.color = '#ef4444';
+
         // Verify if it's a content decoding error or network error
         if (counter.innerText === '--' || counter.innerText === '') {
             counter.innerText = 'ERR';
